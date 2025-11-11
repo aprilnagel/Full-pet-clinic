@@ -2,6 +2,8 @@
 from models import Owners, session
 from bp_auth import register, login
 from bp_owners import view_owner, update_owner, delete_owner
+from bp_pets import view_pets, create_pet, update_pet, delete_pet
+from bp_appointment import create_appointment, view_appointments, reschedule_appointment, complete_appointment
 
 
 def welcome_menu():
@@ -66,16 +68,16 @@ def pets_menu(current_user):
         choice = input("choose 1-5: ")
         if choice == '1':
             #function that displays the current user's pets
-            pass
+            view_pets(current_user)
         elif choice == '2':
             #function to create a new pet linked to the current user, add to db
-            pass
+            create_pet(current_user)
         elif choice == '3':
             #function to update a particular pet 
-            pass
+            update_pet(current_user)
         elif choice == '4':
             #function to delete a particuler pet
-            pass
+            delete_pet(current_user)
         elif choice == '5':
             return
         else:
@@ -84,26 +86,26 @@ def pets_menu(current_user):
 def appointments_menu(current_user):
     while True:
         print("""
-1.) schedule appointment
-2.) view appointments
-3.) reschdule appointment
-4.) Complete appointment
+1.) Schedule Appointment
+2.) View Appointments
+3.) Reschedule Appointment
+4.) Complete Appointment
 5.) Back
 """)
         choice = input("choose 1-5: ")
         if choice == '1':
             #Function to create a new appointment between one of the user's pets
             #and one of the vets
-            pass
+            create_appointment(current_user)
         elif choice == '2':
             #View current user's appointments
-            pass
+            view_appointments(current_user)
         elif choice == '3':
             #Reschedule appointment (change the date)
-            pass
+            reschedule_appointment(current_user)
         elif choice == '4':
             #Complete appointment (change status to complete)
-            pass
+            complete_appointment(current_user)
         elif choice =='5':
             return
 

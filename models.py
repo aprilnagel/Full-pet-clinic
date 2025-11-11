@@ -21,8 +21,8 @@ class Owners(Base):
     def display(self):
         print("--------- My Info ---------------")
         print("Name: ",self.name)
-        print("Email: ",self.email)
-        print("Phone: ",self.phone)
+        print("Email: ",self.name)
+        print("Phone: ",self.name)
     
 
 class Pets(Base):
@@ -38,6 +38,15 @@ class Pets(Base):
     owner: Mapped["Owners"] = relationship("Owners", back_populates="pets")
     appointments: Mapped[list["Appointments"]] = relationship("Appointments", back_populates="pet")
     
+    def display(self):
+        print("--------- Pet Info ---------------")
+        print("Name: ",self.name)
+        print("Species: ",self.species)
+        print("Breed: ",self.breed)
+        print("Age: ",self.age)
+        print("Owner ID: ",self.owner_id)
+        
+        
 class Vets(Base):
     __tablename__ = 'vets'
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
@@ -47,6 +56,12 @@ class Vets(Base):
 
     appointments: Mapped[list["Appointments"]] = relationship("Appointments", back_populates="vet")
     
+    def display(self):
+        print("--------- Vet Info ---------------")
+        print("Name: ",self.name)
+        print("Specialization: ",self.specialization)
+        print("Email: ",self.email)
+        
 #---------------Association Table-----------------
 #---------------Many to Many Relationship between Pets and Vets through Appointments-----------------
 class Appointments(Base):
@@ -54,13 +69,20 @@ class Appointments(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     pet_id: Mapped[int] = mapped_column(Integer, ForeignKey('pets.id'), nullable=False)
     vet_id: Mapped[int] = mapped_column(Integer, ForeignKey('vets.id'), nullable=False)
-    appointment_date: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
+    appointment_date: Mapped[date] = mapped_column(Date, nullable=False)
     notes: Mapped[Text] = mapped_column(Text(200), nullable=True)
     status: Mapped[str] = mapped_column(String(50), nullable=False, default='Scheduled')
     
     pet: Mapped["Pets"] = relationship("Pets", back_populates="appointments")
     vet: Mapped["Vets"] = relationship("Vets", back_populates="appointments")
     
+    def display(self):
+        print("--------- Appointment Info ---------------")
+        print("Pet ID: ",self.pet_id)
+        print("Vet Name: ",self.display())
+        print("Appointment Date: ",self.appointment_date)
+        print("Notes: ",self.notes)
+        print("Status: ",self.status)
 
 
 #---------------Creating Owners-----------------
