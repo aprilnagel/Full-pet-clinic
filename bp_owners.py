@@ -46,3 +46,16 @@ def update_owner(current_user):
 #if so delete the current user from the session
 #commits changes 
 #call main() to start the program over
+
+def delete_owner(current_user):
+    choice = input("TO CONFIRM: Do you want to delete your account? (y/n): ")
+    if choice.lower() == 'y':
+        session.delete(current_user)
+        session.commit()
+        print("Account deleted successfully.") 
+        return None
+    else:
+        print("Account deletion canceled. Back to menu.")
+        return current_user
+#using the while loop in front_end.py to call main() again if we want to once we delete the user. it will loop back to the login/register menu.
+        

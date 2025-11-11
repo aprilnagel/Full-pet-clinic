@@ -1,7 +1,7 @@
 #DONT FORGET TO IMPORT FUNCTIONS AFTER YOU MAKE THEM
 from models import Owners, session
 from bp_auth import register, login
-from bp_owners import view_owner, update_owner
+from bp_owners import view_owner, update_owner, delete_owner
 
 
 def welcome_menu():
@@ -47,9 +47,11 @@ def owner_menu(current_user):
             current_user = update_owner(current_user)
         elif choice == '3':
             #delete the current users account
-            pass
+            current_user = delete_owner(current_user)
+            main() #call main to start program over if we delete the user
+            return current_user
         elif choice == '4':
-            return #Goes back to main menu
+            return current_user#Goes back to main menu
         else:
             print("Invalid Selection.")
 
@@ -115,7 +117,7 @@ def main():
     #you want to test something.
     
     if current_user:
-        while True:
+        while True and current_user:#If we have a current user, show main menu when we delete an owner. The while loop will exit if current_user is None
             print("""
         --------- Pet Clinic --------
         1.) Manage Profile
